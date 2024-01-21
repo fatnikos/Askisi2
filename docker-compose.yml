@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  course-service:
+    build: ./course
+    volumes:
+      - ./course:/usr/src/app
+    ports:
+      - 5001:80
+
+  website:
+    image: php:apache
+    volumes:
+      - ./website:/var/www/html
+    ports:
+      - 5000:80
+    depends_on:
+      - course-service
+
+  service1:
+    build: ./course
+    image: fatnikos/unipicourses  ## goes to your repository on Docker Hub
